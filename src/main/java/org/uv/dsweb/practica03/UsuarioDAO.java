@@ -66,10 +66,10 @@ public class UsuarioDAO {
     List<Usuario> usuarios = new ArrayList<>();
     String sql = "SELECT * FROM usuarios";
 
-    Connection con = conexion.obtenerConexion(); // Obtener la conexión aquí
+    Connection con = conexion.obtenerConexion();
     if (con == null) {
         System.out.println("No se pudo obtener la conexión a la base de datos.");
-        return usuarios; // Retorna una lista vacía si la conexión es nula
+        return usuarios; 
     }
 
     try (PreparedStatement pstmt = con.prepareStatement(sql);

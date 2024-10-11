@@ -13,7 +13,6 @@ public class Conexion {
 
     public Connection obtenerConexion() {
         try {
-            // Cargar el driver (opcional)
             Class.forName("org.postgresql.Driver");
             con = DriverManager.getConnection(url, usuario, password);
             System.out.println("Conexión exitosa a la base de datos.");
