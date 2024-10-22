@@ -16,10 +16,11 @@
             <p:commandButton value="Agregar Usuario" 
                              icon="pi pi-plus"
                              styleClass="p-button-primary p-mb-2"
-                             oncomplete="PF('userDialog').show();" />
+                             oncomplete="PF('userDialog').show();" 
+                             actionListener="#{usuarioBean.prepararNuevoUsuario}" />
         </div>
-    
-        <p:dataTable id="usersTable" var="user" value="#{personaBean.obtenerTodosUsuarios()}" 
+
+        <p:dataTable id="usersTable" var="user" value="#{usuarioBean.obtenerTodosUsuarios()}" 
                      paginator="true" rows="10" 
                      styleClass="p-datatable-responsive">
 
@@ -39,32 +40,36 @@
                 <p:commandButton icon="pi pi-pencil"
                                  styleClass="p-button-warning"
                                  oncomplete="PF('userDialog').show();"
-                                 actionListener="#{personaBean.obtenerUsuario(user.id)}"/>
+                                 actionListener="#{usuarioBean.prepararEditarUsuario(user.id)}"
+                                 update=":form:dialogContent"/>
                 <p:commandButton icon="pi pi-trash"
                                  styleClass="p-button-danger"
-                                 actionListener="#{personaBean.eliminarUsuario(user.id)}"
+                                 actionListener="#{usuarioBean.eliminarUsuario(user.id)}"
                                  update="usersTable"  />
             </p:column>
         </p:dataTable>
 
-        <p:dialog header="Registrar/Editar Usuario" 
+        <p:dialog id="userDialog" header="Registrar/Editar Usuario" 
                   widgetVar="userDialog"
                   resizable="false" responsive="true" 
                   width="400px">
-            <h:panelGrid columns="2" cellpadding="5">
+
+            <h:panelGrid id="dialogContent" columns="2" cellpadding="5">
                 <h:outputLabel for="nombre" value="Nombre" />
-                <p:inputText id="nombre" value="#{personaBean.usuario.nombre}" required="true" />
+                <p:inputText id="nombre" value="#{usuarioBean.usuario.nombre}" required="true" />
 
                 <h:outputLabel for="direccion" value="Dirección" />
-                <p:inputText id="direccion" value="#{personaBean.usuario.direccion}" required="true" />
+                <p:inputText id="direccion" value="#{usuarioBean.usuario.direccion}" required="true" />
 
                 <h:outputLabel for="telefono" value="Teléfono" />
-                <p:inputText id="telefono" value="#{personaBean.usuario.telefono}" required="true" />
+                <p:inputText id="telefono" value="#{usuarioBean.usuario.telefono}" required="true" />
             </h:panelGrid>
 
             <p:commandButton value="Guardar" 
-                             actionListener="#{personaBean.crearUsuario}" 
-                             update="usersTable" styleClass="p-button-success" />
+                             actionListener="#{usuarioBean.guardarUsuario}" 
+                             update="usersTable" 
+                             oncomplete="PF('userDialog').hide()" 
+                             styleClass="p-button-success" />
         </p:dialog>
     </h:form>
 </h:body>
